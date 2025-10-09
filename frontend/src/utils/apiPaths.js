@@ -21,7 +21,7 @@
 
  
 // Base API URL
-export const BASE_URL = "http://localhost:4000";
+export const BASE_URL = "https://buildresumes.onrender.com";
 
 // API Routes for frontend
 export const API_PATH = {
