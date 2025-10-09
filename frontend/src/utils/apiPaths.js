@@ -21,9 +21,9 @@
 
  
 // Base API URL
-<<<<<<< HEAD
+
 export const BASE_URL = "https://buildresumes.onrender.com";
-=======
+
 
 
 // API Routes for frontend
