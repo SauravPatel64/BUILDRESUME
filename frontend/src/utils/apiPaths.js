@@ -1,29 +1,10 @@
-// export const BASE_URL = "http://localhost:4000";
-
-// // API Routes for frontend
-// export const API_PATH = {
-//   AUTH: {
-//     REGISTER: "/api/users/register",
-//     LOGIN: "/api/users/login",
-//     GET_PROFILE: "/api/users/profile",
-//   },
-
-//   RESUME: {
-//     CREATE: "/api/resumes",
-//     GET_ALL: "/api/resumes",
-//     GET_BY_ID: (id) => `/api/resumes/${id}`,
-//     UPDATE: (id) => `/api/resumes/${id}`,
-//     DELETE: (id) => `/api/resumes/${id}`,
-//     UPLOAD_IMAGES: (id) => `/api/resumes/${id}/upload-images`,
-//   },
-// };
 
 
  
 // Base API URL
-<<<<<<< HEAD
+
 export const BASE_URL = "https://buildresumes.onrender.com";
-=======
+
 
 
 // API Routes for frontend
