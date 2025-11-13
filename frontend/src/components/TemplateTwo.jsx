@@ -1,12 +1,11 @@
-
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { LuExternalLink, LuGithub } from "react-icons/lu";
 import { formatYearMonth } from "../utils/helper";
 
-const sectionTitleClass = "text-base font-bold uppercase tracking-wide mb-1 pb-1 border-b border-gray-300";
+const sectionTitleClass = "text-sm font-bold uppercase tracking-wide mb-2 pb-1 border-b border-gray-300";
 
-const TemplateTwo = ({ resumeData = {}, containerWidth }) => {
+const TemplateTwo = ({ resumeData = {}, containerWidth = 0 }) => {
   const {
     profileInfo = {},
     contactInfo = {},
@@ -34,83 +33,81 @@ const TemplateTwo = ({ resumeData = {}, containerWidth }) => {
   return (
     <div
       ref={resumeRef}
-      className="resume-section p-4 bg-white font-sans text-black max-w-4xl mx-auto"
+      className="resume-section p-6 bg-white font-sans text-black mx-auto"
       style={{
-        transform: containerWidth > 0 ? `scale(${scale})` : undefined,
+        width: "8.5in",
+        height: "11in",
+        transform: containerWidth > 0 ? `scale(${scale})` : "scale(1)",
         transformOrigin: "top left",
-        width: containerWidth > 0 ? `${baseWidth}px` : undefined,
-        height: "1123px",
         overflow: "hidden",
       }}
     >
       {/* Header Section */}
-      <div className="text-center mb-2">
-        <h1 className="text-2xl font-bold tracking-tight mb-2">{profileInfo.fullName}</h1>
-        <p className="text-sm text-gray-600 font-medium mb-2">{profileInfo.designation}</p>
-        <div className="flex flex-wrap justify-center gap-1 text-[11px] text-gray-700">
-          {contactInfo.phone && <span>{contactInfo.phone}</span>}
+      <div className="text-center mb-3">
+        <h1 className="text-3xl font-bold mb-1">{profileInfo.fullName || "Your Name"}</h1>
+        <p className="text-sm text-gray-600 mb-2">{profileInfo.designation || "Your Title"}</p>
+        <div className="flex flex-wrap justify-center gap-2 text-xs text-gray-700">
+          {contactInfo.phone && <span>📱 {contactInfo.phone}</span>}
           {contactInfo.email && (
             <a href={`mailto:${contactInfo.email}`} className="hover:underline text-blue-600">
-              {contactInfo.email}
+              ✉️ {contactInfo.email}
             </a>
           )}
           {contactInfo.linkedin && (
-            <a href={contactInfo.linkedin} className="hover:underline text-blue-600">
+            <a href={contactInfo.linkedin} target="_blank" rel="noopener noreferrer" className="hover:underline text-blue-600">
               LinkedIn
             </a>
           )}
           {contactInfo.github && (
-            <a href={contactInfo.github} className="hover:underline text-blue-600">
+            <a href={contactInfo.github} target="_blank" rel="noopener noreferrer" className="hover:underline text-blue-600">
               GitHub
             </a>
           )}
           {contactInfo.website && (
-            <a href={contactInfo.website} className="hover:underline text-blue-600">
+            <a href={contactInfo.website} target="_blank" rel="noopener noreferrer" className="hover:underline text-blue-600">
               Portfolio
             </a>
           )}
         </div>
       </div>
 
-      <hr className="border-gray-300 mb-2" />
+      <hr className="border-gray-400 mb-3" />
 
       {/* Summary */}
       {profileInfo.summary && (
-        <section className="mb-2">
-          <h2 className={sectionTitleClass}>Summary</h2>
-          <p className="text-[11px] text-gray-800 leading-tight">{profileInfo.summary}</p>
+        <section className="mb-3">
+          <h2 className={sectionTitleClass}>Professional Summary</h2>
+          <p className="text-xs text-gray-800 leading-relaxed">{profileInfo.summary}</p>
         </section>
       )}
 
       {/* Experience */}
-      {workExperience.length > 0 && (
-        <section className="mb-2">
-          <h2 className={sectionTitleClass}>Experience</h2>
+      {workExperience?.length > 0 && (
+        <section className="mb-3">
+          <h2 className={sectionTitleClass}>Work Experience</h2>
           <div className="space-y-2">
             {workExperience.map((exp, idx) => (
-              <div key={idx} className="space-y-0.5">
+              <div key={idx} className="border-l-2 border-blue-400 pl-2">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="font-semibold text-[12px] pb-2 text-gray-800">{exp.role}</h3>
-                    <p className="italic text-[11px] pb-2 text-gray-600">{exp.company}</p>
+                    <h3 className="font-bold text-sm text-gray-800">{exp.role}</h3>
+                    <p className="text-xs text-gray-600">{exp.company}</p>
                   </div>
-                  <div className="text-[11px] text-right text-gray-600">
-                    <p className="italic">
-                      {formatYearMonth(exp.startDate)} - {formatYearMonth(exp.endDate)}
-                    </p>
-                    {exp.location && <p className="text-[11px]">{exp.location}</p>}
-                  </div>
+                  <span className="text-xs text-gray-600">
+                    {formatYearMonth(exp.startDate) || "Start"} - {formatYearMonth(exp.endDate) || "End"}
+                  </span>
                 </div>
+                {exp.location && <p className="text-xs text-gray-600">{exp.location}</p>}
                 {exp.technologies && (
-                  <p className="bg-gray-100 text-[10px] font-mono px-1.5 py-0.5 rounded inline-block">
-                    {exp.technologies}
-                  </p>
+                  <p className="text-xs bg-gray-100 px-2 py-1 rounded mt-1 inline-block">{exp.technologies}</p>
                 )}
-                <ul className=" mt-0.5 text-[12px] text-gray-700">
-                  {exp.description?.split("\n").map((line, i) => (
-                    <li key={i} className="pb-1">{line}</li>
-                  ))}
-                </ul>
+                {exp.description && (
+                  <ul className="text-xs text-gray-700 mt-1 space-y-0.5">
+                    {exp.description.split("\n").map((line, i) => (
+                      <li key={i} className="list-disc list-inside">{line}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
@@ -118,38 +115,36 @@ const TemplateTwo = ({ resumeData = {}, containerWidth }) => {
       )}
 
       {/* Projects */}
-      {projects.length > 0 && (
-        <section className="mb-2">
+      {projects?.length > 0 && (
+        <section className="mb-3">
           <h2 className={sectionTitleClass}>Projects</h2>
           <div className="space-y-2">
             {projects.map((proj, idx) => (
-              <div key={idx} className="space-y-0.5">
+              <div key={idx}>
                 <div className="flex justify-between items-start">
-                  <h3 className="font-semibold text-[12px] text-gray-800">{proj.title}</h3>
+                  <h3 className="font-bold text-sm text-gray-800">{proj.title}</h3>
                   {proj.link && (
-                    <a href={proj.link} className="text-blue-600 text-[11px] hover:underline">
-                      {proj.linkType || "Link"}
+                    <a href={proj.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 text-xs hover:underline flex items-center gap-1">
+                      <LuExternalLink size={12} /> Link
                     </a>
                   )}
                 </div>
-                {proj.technologies && (
-                  <p className="bg-gray-100 pb-2 text-[10px] font-mono px-1.5 py-0.5 rounded inline-block">
-                    {proj.technologies}
-                  </p>
+                {proj.technologies && <p className="text-xs bg-gray-100 px-2 py-1 rounded inline-block">{proj.technologies}</p>}
+                <p className="text-xs text-gray-700 mt-1">{proj.description}</p>
+                {(proj.github || proj.liveDemo) && (
+                  <div className="flex gap-3 mt-1 text-xs">
+                    {proj.github && (
+                      <a href={proj.github} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline flex items-center gap-1">
+                        <LuGithub size={12} /> Code
+                      </a>
+                    )}
+                    {proj.liveDemo && (
+                      <a href={proj.liveDemo} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline flex items-center gap-1">
+                        <LuExternalLink size={12} /> Demo
+                      </a>
+                    )}
+                  </div>
                 )}
-                <p className="text-[11px] pb-2 text-gray-700 ">{proj.description}</p>
-                <div className="flex gap-1 mt-0.5 pt-2 text-[11px]">
-                  {proj.github && (
-                    <a href={proj.github} className="flex items-center gap-0.5 hover:underline text-blue-600">
-                      <LuGithub size={10} /> GitHub
-                    </a>
-                  )}
-                  {proj.liveDemo && (
-                    <a href={proj.liveDemo} className="flex items-center gap-0.5 hover:underline text-blue-600">
-                      <LuExternalLink size={10} /> Demo
-                    </a>
-                  )}
-                </div>
               </div>
             ))}
           </div>
@@ -157,49 +152,43 @@ const TemplateTwo = ({ resumeData = {}, containerWidth }) => {
       )}
 
       {/* Education */}
-      {education.length > 0 && (
-        <section className="mb-2">
+      {education?.length > 0 && (
+        <section className="mb-3">
           <h2 className={sectionTitleClass}>Education</h2>
-          <div className="space-y-1">
-            {education.map((edu, idx) => (
-              <div key={idx} className="space-y-0.25">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-semibold text-[12px] pb-2 text-gray-800">{edu.degree}</h3>
-                  <p className="italic text-[11px] pb-2 text-gray-600">
-                    {formatYearMonth(edu.startDate)} - {formatYearMonth(edu.endDate)}
-                  </p>
-                </div>
-                <p className="italic text-[11px] text-gray-700">{edu.institution}</p>
-                {edu.courses && (
-                  <p className="text-[11px]">
-                    <strong>Courses:</strong> {edu.courses}
-                  </p>
-                )}
+          {education.map((edu, idx) => (
+            <div key={idx} className="mb-1.5">
+              <div className="flex justify-between">
+                <h3 className="font-bold text-sm text-gray-800">{edu.degree}</h3>
+                <span className="text-xs text-gray-600">{formatYearMonth(edu.startDate)} - {formatYearMonth(edu.endDate)}</span>
               </div>
+              <p className="text-xs text-gray-700">{edu.institution}</p>
+              {edu.courses && <p className="text-xs text-gray-600">Courses: {edu.courses}</p>}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {/* Skills */}
+      {skills?.length > 0 && (
+        <section className="mb-3">
+          <h2 className={sectionTitleClass}>Skills</h2>
+          <div className="flex flex-wrap gap-2">
+            {skills.map((skill, idx) => (
+              <span key={idx} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                {skill.name}
+              </span>
             ))}
           </div>
         </section>
       )}
 
-      {/* Skills */}
-      {skills.length > 0 && (
-        <section className="mb-2">
-          <h2 className={sectionTitleClass}>Skills</h2>
-          <ul className="text-[11px] text-gray-800 flex flex-wrap gap-1">
-            {skills.map((skill, idx) => (
-              <li key={idx} className="w-fit">{skill.name}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
       {/* Certifications */}
-      {certifications.length > 0 && (
-        <section className="mb-2">
+      {certifications?.length > 0 && (
+        <section className="mb-3">
           <h2 className={sectionTitleClass}>Certifications</h2>
-          <ul className="list-disc list-inside text-[11px] text-gray-700">
+          <ul className="text-xs text-gray-700 space-y-1">
             {certifications.map((cert, idx) => (
-              <li key={idx} className="leading-tight">
+              <li key={idx} className="list-disc list-inside">
                 {cert.title} — {cert.issuer} ({cert.year})
               </li>
             ))}
@@ -208,36 +197,32 @@ const TemplateTwo = ({ resumeData = {}, containerWidth }) => {
       )}
 
       {/* Languages & Interests */}
-      {(languages.length > 0 || interests.length > 0) && (
-        <section className="mb-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {languages.length > 0 && (
-              <div>
-                <h2 className={sectionTitleClass}>Languages</h2>
-                <ul className="flex flex-wrap gap-1 text-[11px] text-gray-700">
-                  {languages.map((lang, idx) => (
-                    <li key={idx} className="bg-gray-100 px-1.5 py-0.5 rounded-full">
-                      {lang.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {interests.length > 0 && interests.some(Boolean) && (
-              <div>
-                <h2 className={sectionTitleClass}>Interests</h2>
-                <ul className="flex flex-wrap gap-1 text-[11px] text-gray-700">
-                  {interests.filter(Boolean).map((int, idx) => (
-                    <li key={idx} className="bg-gray-100 px-1.5 py-0.5 rounded-full">
-                      {int}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+      <div className="grid grid-cols-2 gap-4">
+        {languages?.length > 0 && (
+          <section>
+            <h2 className={sectionTitleClass}>Languages</h2>
+            <div className="flex flex-wrap gap-1">
+              {languages.map((lang, idx) => (
+                <span key={idx} className="text-xs bg-gray-200 px-2 py-1 rounded-full">
+                  {lang.name}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+        {interests?.length > 0 && (
+          <section>
+            <h2 className={sectionTitleClass}>Interests</h2>
+            <div className="flex flex-wrap gap-1">
+              {interests.filter(Boolean).map((int, idx) => (
+                <span key={idx} className="text-xs bg-gray-200 px-2 py-1 rounded-full">
+                  {int}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
     </div>
   );
 };

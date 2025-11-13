@@ -5,8 +5,6 @@ import { BookTemplate, Check } from 'lucide-react'
 import { TemplateCard } from './Cards'
 import RenderResume from './RenderResume'
 
-
-
 const TAB_DATA = [{label:'Templates'}]
 
 const ThemeSelector = ({selectedTheme, setSelectedTheme, resumeData, onClose }) => {
@@ -23,26 +21,24 @@ const ThemeSelector = ({selectedTheme, setSelectedTheme, resumeData, onClose }) 
 
   const [tabValue, setTabValue] = useState('Templates');
 
-
   const handleThemeSelection = ()=>{
-    setSelectedTemplate(selectedTemplate.theme)
+    setSelectedTheme(selectedTemplate.theme)
     onClose()
   }
 
-const updateBaseWidth = () => {
-  if(resumeRef.current){
-    setBaseWidth(resumeRef.current.offsetWidth)
+  const updateBaseWidth = () => {
+    if(resumeRef.current){
+      setBaseWidth(resumeRef.current.offsetWidth)
+    }
   }
-}
 
-useEffect(()=> {
-  updateBaseWidth()
-  window.addEventListener("resize", updateBaseWidth)
-  return () => {
-    window.removeEventListener("resize", updateBaseWidth)
-  }
-}, [])
-
+  useEffect(()=> {
+    updateBaseWidth()
+    window.addEventListener("resize", updateBaseWidth)
+    return () => {
+      window.removeEventListener("resize", updateBaseWidth)
+    }
+  }, [])
 
   return (
     <div className='max-w-7xl mx-auto px-4'>
@@ -76,13 +72,13 @@ useEffect(()=> {
           </div>
         </div>
 
-      {/* Right Area */}
-      <div className='lg-col-span-3 bg-white rounded-2xl border-gray-100 p-4 sm:p-6' ref={resumeRef} >
+        {/* Right Area */}
+        <div className='lg:col-span-3 bg-white rounded-2xl border border-gray-100 p-4 sm:p-6' ref={resumeRef} >
           <RenderResume templateId={selectedTemplate?.theme || ""}
           resumeData={resumeData || DUMMY_RESUME_DATA} 
           containerWidth={baseWidth}
           />
-      </div>
+        </div>
       </div>
     </div>
   )
